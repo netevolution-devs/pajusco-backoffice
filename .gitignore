@@ -4,6 +4,7 @@ node_modules
 /public/build
 .env
 .vscode
+.DS_Store
 
 /cypress/screenshots
 /cypress/videos
