@@ -32,4 +32,24 @@ async function getById(token, id) {
     }
 }
 
-export default { getAll, getById }
+async function add(token, values, clientId) {
+    const data = await axios.post(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "devices",
+        {
+            ...values,
+        },
+        {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-AUTH-TOKEN": token
+            }
+        });
+
+    if (data.data.error) {
+        return null;
+    } else {
+        return data?.data.data;
+    }
+}
+
+export default { getAll, getById, add }

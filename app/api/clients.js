@@ -71,6 +71,8 @@ async function remove(token, id) {
 }
 
 async function modify(token, id, values) {
+    delete values.clientId;
+
     const data = await axios.put(process.env.API_ENDPOINT + "/backoffice/clients/" + id,
         {
             ...values,

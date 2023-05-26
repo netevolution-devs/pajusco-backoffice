@@ -4,6 +4,7 @@ import clientsProvider from "../api/clients";
 import { getUser } from "~/session.server";
 import { Link, useLoaderData } from "@remix-run/react";
 import HardwareList from "../components/modals/HardwareList";
+import AddDevice from "../components/modals/AddDevice";
 
 export const meta = () => [{ title: "Devices del cliente" }];
 
@@ -24,7 +25,7 @@ export default function BackofficeClientsCidDevices() {
                 <Link to="/backoffice/clients"><ion-icon name="arrow-back-outline" size="large"></ion-icon></Link>
                 <div className="flex justify-between items-center">
                     <p className="py-6 text-2xl">Lista devices del cliente {client.name}</p>
-                    {/* modal to add device */}
+                    <AddDevice client={client} />
                 </div>
 
                 <table className="w-full table-fixed">
@@ -46,7 +47,6 @@ export default function BackofficeClientsCidDevices() {
                                 <td>{device.model_path}</td>
                                 <td className="flex items-center space-x-4">
                                     <HardwareList device={device} />
-                                    {/* <Link to={`${device.id}/hardwares`}><ion-icon name="file-tray-full-outline"></ion-icon></Link> */}
                                     {/* <ModifyClient client={client} />
                                     <Form method="post">
                                         <input name="clientId" value={client.id} type="hidden" />

@@ -16,6 +16,45 @@ async function getAll(token, id) {
     }
 }
 
+async function add(token, clientId, values) {
+    values.authorized = values.authorized === "on" ? true : false;
+
+    const data = await axios.post(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "/users",
+        {
+            ...values,
+        },
+        {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token
+            }
+        });
+
+    if (data.data.error) {
+        return null;
+    } else {
+        return data?.data.data;
+    }
+}
+
+async function remove(token, clientId, id) {
+    const data = await axios.delete(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "/users/" + id,
+        {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "X-AUTH-TOKEN": token
+            }
+        });
+
+    if (data.data.error) {
+        return null;
+    } else {
+        return data?.data.data;
+    }
+}
+
 async function modify(token, clientId, id, values) {
     values.authorized = values.authorized === "on" ? true : false;
 
@@ -38,4 +77,4 @@ async function modify(token, clientId, id, values) {
     }
 }
 
-export default { getAll, modify }
+export default { getAll, remove, add, modify }

@@ -2,9 +2,10 @@ import { json, redirect } from "@remix-run/node";
 import consumersProvider from "../api/consumers";
 import clientsProvider from "../api/clients";
 import { getUser } from "~/session.server";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import ModifyConsumer from "../components/modals/ModifyConsumer";
 import { safeRedirect } from "~/utils";
+import AddConsumer from "../components/modals/AddConsumer";
 
 export const meta = () => [{ title: "Utenti del cliente" }];
 
@@ -21,8 +22,14 @@ export const action = async ({ request, params }) => {
     const formData = await request.formData();
     const { _action, ...values } = Object.fromEntries(formData)
 
+    if (_action === "add") {
+        const res = await consumersProvider.add(user.token, params.cid, values);
+    }
     if (_action === "modify") {
         const res = await consumersProvider.modify(user.token, params.cid, values.consumerId, values);
+    }
+    if (_action === "remove") {
+        const res = await consumersProvider.remove(user.token, params.cid, values.consumerId);
     }
 
     const redirectTo = safeRedirect(formData.get("redirectTo"), `/backoffice/clients/${params.cid}/consumers`);
@@ -33,12 +40,12 @@ export default function BackofficeClientsCidConsumers() {
     const { client, consumers } = useLoaderData();
 
     return (
-        <main className="relative min-h-screen bg-white">
+        <main className="relative">
             <div>
                 <Link to="/backoffice/clients"><ion-icon name="arrow-back-outline" size="large"></ion-icon></Link>
                 <div className="flex justify-between items-center">
                     <p className="py-6 text-2xl">Lista utenti del cliente {client.name}</p>
-                    {/* modal to add consumer */}
+                    <AddConsumer client={client} />
                 </div>
 
                 <table className="w-full table-fixed">
@@ -65,14 +72,13 @@ export default function BackofficeClientsCidConsumers() {
                                 <td>{consumer.mobile ?? "-"}</td>
                                 <td>{consumer.authorized ? "✔️" : "⭕"}</td>
                                 <td className="flex items-center space-x-4">
-                                    {/* <Link to={`${client.id}/devices`}><ion-icon name="file-tray-full-outline"></ion-icon></Link> */}
                                     <ModifyConsumer consumer={consumer} />
-                                    {/* <Form method="post">
-                                        <input name="clientId" value={client.id} type="hidden" />
+                                    <Form method="post">
+                                        <input name="consumerId" value={consumer.id} type="hidden" />
                                         <button name="_action" value="remove">
                                             <ion-icon name="trash-outline"></ion-icon>
                                         </button>
-                                    </Form> */}
+                                    </Form>
                                 </td>
                             </tr>)}
                     </tbody>
