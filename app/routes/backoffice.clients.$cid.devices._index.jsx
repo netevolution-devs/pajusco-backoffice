@@ -1,10 +1,11 @@
-import { json } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import devicesProvider from "../api/devices";
 import clientsProvider from "../api/clients";
 import { getUser } from "~/session.server";
-import { Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import HardwareList from "../components/modals/HardwareList";
 import AddDevice from "../components/modals/AddDevice";
+import { safeRedirect } from "~/utils";
 
 export const meta = () => [{ title: "Devices del cliente" }];
 
@@ -14,6 +15,22 @@ export async function loader({ request, params }) {
     const client = await clientsProvider.getById(user.token, params.cid);
 
     return json({ client, devices });
+}
+
+export async function action({ request, params }) {
+    const user = await getUser(request);
+    const formData = await request.formData();
+    const { _action, ...values } = Object.fromEntries(formData)
+
+    if (_action === "add") {
+        const res = devicesProvider.add(user.token, params.cid, values);
+    }
+    if (_action === "remove") {
+        const res = devicesProvider.remove(user.token, values.deviceId);
+    }
+
+    const redirectTo = safeRedirect(formData.get("redirectTo"), `/backoffice/clients/${params.cid}/devices`);
+    return redirect(redirectTo);
 }
 
 export default function BackofficeClientsCidDevices() {
@@ -47,13 +64,13 @@ export default function BackofficeClientsCidDevices() {
                                 <td>{device.model_path}</td>
                                 <td className="flex items-center space-x-4">
                                     <HardwareList device={device} />
-                                    {/* <ModifyClient client={client} />
+                                    {/* <ModifyClient client={client} />*/}
                                     <Form method="post">
-                                        <input name="clientId" value={client.id} type="hidden" />
+                                        <input name="deviceId" value={device.id} type="hidden" />
                                         <button name="_action" value="remove">
                                             <ion-icon name="trash-outline"></ion-icon>
                                         </button>
-                                    </Form> */}
+                                    </Form>
                                 </td>
                             </tr>)}
                     </tbody>

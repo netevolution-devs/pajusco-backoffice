@@ -32,8 +32,8 @@ async function getById(token, id) {
     }
 }
 
-async function add(token, values, clientId) {
-    const data = await axios.post(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "devices",
+async function add(token, clientId, values) {
+    const data = await axios.post(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "/devices",
         {
             ...values,
         },
@@ -52,4 +52,21 @@ async function add(token, values, clientId) {
     }
 }
 
-export default { getAll, getById, add }
+async function remove(token, clientId, id) {
+    const data = await axios.delete(process.env.API_ENDPOINT + "backoffice/clients/" + { clientId } + "/devices/" + { id },
+        {
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
+                "X-AUTH-TOKEN": token
+            }
+        });
+
+    if (data.data.error) {
+        return null;
+    } else {
+        return data?.data.data;
+    }
+}
+
+export default { getAll, getById, add, remove }
