@@ -5,6 +5,7 @@ import { getUser } from "~/session.server";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import HardwareList from "../components/modals/HardwareList";
 import AddDevice from "../components/modals/AddDevice";
+import ModifyDevice from "../components/modals/ModifyDevice";
 import { safeRedirect } from "~/utils";
 
 export const meta = () => [{ title: "Devices del cliente" }];
@@ -24,6 +25,9 @@ export async function action({ request, params }) {
 
     if (_action === "add") {
         const res = devicesProvider.add(user.token, params.cid, values);
+    }
+    if (_action === "modify") {
+        const res = devicesProvider.modify(user.token, params.cid, values.deviceId, values);
     }
     if (_action === "remove") {
         const res = devicesProvider.remove(user.token, params.cid, values.deviceId);
@@ -50,6 +54,7 @@ export default function BackofficeClientsCidDevices() {
                         <tr className="text-white text-xl">
                             <th>id</th>
                             <th>nome</th>
+                            <th>exor id</th>
                             <th>hw id</th>
                             <th>model path</th>
                             <th>azioni</th>
@@ -60,11 +65,12 @@ export default function BackofficeClientsCidDevices() {
                             <tr key={idx}>
                                 <td>{device.id}</td>
                                 <td>{device.name}</td>
+                                <td>{device.exor_id}</td>
                                 <td>{device.hw_id}</td>
                                 <td>{device.model_path}</td>
                                 <td className="flex items-center space-x-4">
                                     <HardwareList device={device} />
-                                    {/* <ModifyClient client={client} />*/}
+                                    <ModifyDevice device={device} />
                                     <Form method="post">
                                         <input name="deviceId" value={device.id} type="hidden" />
                                         <button name="_action" value="remove">
