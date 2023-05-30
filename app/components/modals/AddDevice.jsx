@@ -38,8 +38,8 @@ export default function AddDevice(props) {
                             </label>
                             <input
                                 className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
-                                id="exorId"
-                                name="exorId"
+                                id="exor_id"
+                                name="exor_id"
                             />
                         </fieldset>
                         <fieldset className="mb-[15px] flex items-center gap-5">
@@ -48,8 +48,8 @@ export default function AddDevice(props) {
                             </label>
                             <input
                                 className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
-                                id="hardwareId"
-                                name="hardwareId"
+                                id="hw_id"
+                                name="hw_id"
                             />
                         </fieldset>
                         <div className="mt-[25px] flex justify-end">

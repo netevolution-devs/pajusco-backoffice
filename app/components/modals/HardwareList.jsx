@@ -7,12 +7,19 @@ export default function HardwareList(props) {
 
     const [hardwares, setHardwares] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     useEffect(() => {
         async function getHardwares() {
             const hws = await hardwaresProvider.getAll(device.hw_id);
-            setHardwares(hws);
-            setLoading(false);
+            if (hws.error.message) {
+                setLoading(false);
+                setError(hws.error.message);
+                setHardwares([]);
+            } else {
+                setHardwares(hws.data);
+                setLoading(false);
+            }
         }
 
         getHardwares();
@@ -33,8 +40,9 @@ export default function HardwareList(props) {
                     </Dialog.Title>
                     <Dialog.Description className="text-mauve11 mt-[10px] mb-5 text-[15px] leading-normal">
                         Lista degli hardware
+                        {error && <p className="pt-4 text-center uppercase text-red-600 text-lg">{error}</p>}
                     </Dialog.Description>
-                    {loading ?
+                    {(loading && !error) ?
                         <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" className="w-10" viewBox="0 0 100 100" preserveAspectRatio="xMidYMid">
                             <circle cx="50" cy="50" fill="none" stroke="#16a34a" strokeWidth="10" r="35" strokeDasharray="164.93361431346415 56.97787143782138">
                                 <animateTransform attributeName="transform" type="rotate" repeatCount="indefinite" dur="1s" values="0 50 50;360 50 50" keyTimes="0;1"></animateTransform>

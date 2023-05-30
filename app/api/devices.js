@@ -53,7 +53,7 @@ async function add(token, clientId, values) {
 }
 
 async function remove(token, clientId, id) {
-    const data = await axios.delete(process.env.API_ENDPOINT + "backoffice/clients/" + { clientId } + "/devices/" + { id },
+    const data = await axios.delete(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "/devices/" + id,
         {
             headers: {
                 "Accept": "application/json",

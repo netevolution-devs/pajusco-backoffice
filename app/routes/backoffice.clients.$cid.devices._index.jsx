@@ -26,7 +26,7 @@ export async function action({ request, params }) {
         const res = devicesProvider.add(user.token, params.cid, values);
     }
     if (_action === "remove") {
-        const res = devicesProvider.remove(user.token, values.deviceId);
+        const res = devicesProvider.remove(user.token, params.cid, values.deviceId);
     }
 
     const redirectTo = safeRedirect(formData.get("redirectTo"), `/backoffice/clients/${params.cid}/devices`);
@@ -37,8 +37,8 @@ export default function BackofficeClientsCidDevices() {
     const { client, devices } = useLoaderData();
 
     return (
-        <main className="relative min-h-screen bg-white">
-            <div className="">
+        <main className="relative">
+            <div>
                 <Link to="/backoffice/clients"><ion-icon name="arrow-back-outline" size="large"></ion-icon></Link>
                 <div className="flex justify-between items-center">
                     <p className="py-6 text-2xl">Lista devices del cliente {client.name}</p>

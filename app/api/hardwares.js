@@ -11,9 +11,9 @@ async function getAll(deviceHardwareId) {
         });
 
     if (data.data.error) {
-        return null;
+        return data.data;
     } else {
-        return data?.data.data;
+        return data?.data;
     }
 }
 

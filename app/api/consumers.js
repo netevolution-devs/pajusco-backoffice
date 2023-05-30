@@ -18,6 +18,7 @@ async function getAll(token, id) {
 
 async function add(token, clientId, values) {
     values.authorized = values.authorized === "on" ? true : false;
+    values.business_role = parseInt(values.business_role);
 
     const data = await axios.post(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "/users",
         {
@@ -26,7 +27,7 @@ async function add(token, clientId, values) {
         {
             headers: {
                 "Accept": "application/json",
-                "Content-Type": "application/json",
+                "Content-Type": "application/x-www-form-urlencoded",
                 "X-AUTH-TOKEN": token
             }
         });
