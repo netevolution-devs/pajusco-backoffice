@@ -17,10 +17,15 @@ export default function Index() {
                 </div>
             </div>
 
-            <div className="flex justify-around">
+            <div className="flex justify-center gap-x-32">
                 <div className="p-8 px-16 rounded shadow-2xl">
                     <p className="py-2 text-xl text-center">Lista clienti</p>
                     <Link className="block px-8 py-4 bg-green-400 rounded hover:shadow-lg" to="clients">Clienti</Link>
+                </div>
+
+                <div className="p-8 px-16 rounded shadow-2xl">
+                    <p className="py-2 text-xl text-center">Lista abbonamenti</p>
+                    <Link className="block px-8 py-4 bg-green-400 rounded hover:shadow-lg" to="subscriptions">Abbonamenti</Link>
                 </div>
             </div>
         </main>
