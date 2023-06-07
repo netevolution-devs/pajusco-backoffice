@@ -49,7 +49,8 @@ export default function ModifySubscription(props) {
                                 className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
                                 id="type"
                                 name="type"
-                                required>
+                                required
+                                defaultValue={subscription.type}>
                                 <option value="">--</option>
                                 <option value="trial">Trial</option>
                                 <option value="subscription">Sottoscrizione</option>
@@ -65,7 +66,6 @@ export default function ModifySubscription(props) {
                                 name="description"
                                 placeholder="descrizione"
                                 defaultValue={subscription.description}
-                                required
                             />
                         </fieldset>
                         <fieldset className="mb-[15px] flex items-center gap-5">

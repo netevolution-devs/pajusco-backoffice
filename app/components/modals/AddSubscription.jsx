@@ -61,7 +61,6 @@ export default function AddSubcsription() {
                                 id="description"
                                 name="description"
                                 placeholder="descrizione"
-                                required
                             />
                         </fieldset>
                         <fieldset className="mb-[15px] flex items-center gap-5">
