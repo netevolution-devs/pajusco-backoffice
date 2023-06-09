@@ -62,6 +62,7 @@ export default function BackofficeClients() {
                                 <td>{client.name}</td>
                                 <td>{client.code}</td>
                                 <td className="flex items-center space-x-4">
+                                    <Link to={`${client.id}/subscriptions`}><ion-icon name="calendar-number-outline"></ion-icon></Link>
                                     <Link to={`${client.id}/devices`}><ion-icon name="file-tray-full-outline"></ion-icon></Link>
                                     <Link to={`${client.id}/consumers`}><ion-icon name="people-outline"></ion-icon></Link>
                                     <ModifyClient client={client} />

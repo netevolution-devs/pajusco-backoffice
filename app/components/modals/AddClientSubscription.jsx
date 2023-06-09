@@ -2,7 +2,9 @@ import * as Dialog from "@radix-ui/react-dialog";
 import { Form } from "@remix-run/react";
 import { useState } from "react";
 
-export default function AddClient() {
+export default function AddClientSubscription(props) {
+    const { subscriptions } = props;
+
     const [open, setOpen] = useState(false);
 
     const onClickHandler = () => {
@@ -20,35 +22,37 @@ export default function AddClient() {
                 <Dialog.Overlay className="bg-blackA9 data-[state=open]:animate-overlayShow fixed inset-0" />
                 <Dialog.Content className="data-[state=open]:animate-contentShow fixed top-[50%] left-[50%] max-h-[85vh] w-[90vw] max-w-[450px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
                     <Dialog.Title className="text-mauve12 m-0 text-[17px] font-medium">
-                        Aggiungi cliente
+                        Aggiungi abbonamento utente
                     </Dialog.Title>
                     <Dialog.Description className="text-mauve11 mt-[10px] mb-5 text-[15px] leading-normal">
-                        Inserisci nome e codice cliente per poterlo aggiungere
+                        Inserisci l'abbonamento da aggiungere all'utente
                     </Dialog.Description>
                     <Form method="post" onSubmit={onClickHandler}>
                         <fieldset className="mb-[15px] flex items-center gap-5">
-                            <label className="text-violet11 w-[90px] text-right text-[15px]" htmlFor="name">
-                                Nome
+                            <label className="text-violet11 w-[90px] text-right text-[15px]" htmlFor="subscriptionId">
+                                Abbonamento
                             </label>
-                            <input
+                            <select
                                 className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
-                                id="name"
-                                name="name"
-                                placeholder="..."
-                                required
-                            />
+                                name="subscriptionId"
+                                id="subscriptionId"
+                                required>
+                                <option value="">--Scegli un abbonamento--</option>
+                                {subscriptions.map((subscription, idx) =>
+                                    <option key={idx} value={subscription.id}>{subscription.name}</option>)}
+                            </select>
                         </fieldset>
                         <fieldset className="mb-[15px] flex items-center gap-5">
-                            <label className="text-violet11 w-[90px] text-right text-[15px]" htmlFor="code">
-                                Codice
+                            <label className="text-violet11 w-[90px] text-right text-[15px]" htmlFor="price">
+                                Prezzo
                             </label>
                             <input
                                 className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
-                                id="code"
-                                name="code"
-                                placeholder="00"
-                                required
-                            />
+                                type="number"
+                                name="price"
+                                id="price"
+                                required>
+                            </input>
                         </fieldset>
                         <div className="mt-[25px] flex justify-end">
                             {/* <Dialog.Close asChild> */}
