@@ -73,7 +73,7 @@ async function remove(token, clientId, id) {
 async function modify(token, clientId, id, values) {
     const data = await axios.put(process.env.API_ENDPOINT + "/backoffice/clients/" + clientId + "/subscriptions/client_subscriptions/" + id,
         {
-            price: values.price,
+            ...values
         },
         {
             headers: {
