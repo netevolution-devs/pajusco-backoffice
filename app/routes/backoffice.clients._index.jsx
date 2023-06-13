@@ -52,6 +52,7 @@ export default function BackofficeClients() {
                             <th>id</th>
                             <th>nome</th>
                             <th>codice</th>
+                            <th>giorni rimanenti</th>
                             <th>azioni</th>
                         </tr>
                     </thead>
@@ -61,6 +62,7 @@ export default function BackofficeClients() {
                                 <td>{client.id}</td>
                                 <td>{client.name}</td>
                                 <td>{client.code}</td>
+                                <td className={client.missing_days < 30 ? "text-red-600" : "text-green-600"}>{client.missing_days}</td>
                                 <td className="flex items-center space-x-4">
                                     <Link to={`${client.id}/subscriptions`}><ion-icon name="calendar-number-outline"></ion-icon></Link>
                                     <Link to={`${client.id}/devices`}><ion-icon name="file-tray-full-outline"></ion-icon></Link>
