@@ -23,10 +23,10 @@ export const action = async ({ request }) => {
         res = await clientsProvider.add(user.token, values);
     }
     if (_action === "remove") {
-        res = clientsProvider.remove(user.token, values.clientId);
+        res = await clientsProvider.remove(user.token, values.clientId);
     }
     if (_action === "modify") {
-        res = clientsProvider.modify(user.token, values.clientId, values);
+        res = await clientsProvider.modify(user.token, values.clientId, values);
     }
 
     if (res.message) {
