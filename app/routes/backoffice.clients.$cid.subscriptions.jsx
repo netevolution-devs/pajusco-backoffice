@@ -5,7 +5,6 @@ import subscriptionsProvider from "../api/subscriptions";
 import { getUser } from "~/session.server";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import ModifyClientSubscription from "../components/modals/ModifyClientSubscription";
-import { safeRedirect } from "~/utils";
 import AddClientSubscription from "../components/modals/AddClientSubscription";
 
 export const meta = () => [{ title: "Abbonamenti del cliente" }];
@@ -24,18 +23,22 @@ export const action = async ({ request, params }) => {
     const formData = await request.formData();
     const { _action, ...values } = Object.fromEntries(formData)
 
+    let res;
     if (_action === "add") {
-        const res = await clientSubscriptionsProvider.add(user.token, params.cid, values);
+        res = await clientSubscriptionsProvider.add(user.token, params.cid, values);
     }
     if (_action === "modify") {
-        const res = await clientSubscriptionsProvider.modify(user.token, params.cid, values.clientSubscriptionId, values);
+        res = await clientSubscriptionsProvider.modify(user.token, params.cid, values.clientSubscriptionId, values);
     }
     if (_action === "remove") {
-        const res = await clientSubscriptionsProvider.remove(user.token, params.cid, values.clientSubscriptionId);
+        res = await clientSubscriptionsProvider.remove(user.token, params.cid, values.clientSubscriptionId);
     }
 
-    const redirectTo = safeRedirect(formData.get("redirectTo"), `/backoffice/clients/${params.cid}/subscriptions`);
-    return redirect(redirectTo);
+    if (res.message) {
+        return json({ error: res.message });
+    }
+
+    return json({});
 }
 
 export default function BackofficeClientsCidSubscription() {
