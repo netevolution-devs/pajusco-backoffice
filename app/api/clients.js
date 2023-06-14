@@ -48,7 +48,7 @@ async function add(token, values) {
         });
 
     if (data.data.error) {
-        return null;
+        return data.data.error;
     } else {
         return data?.data.data;
     }
@@ -85,7 +85,7 @@ async function modify(token, id, values) {
         });
 
     if (data.data.error) {
-        return null;
+        return data.data.error;
     } else {
         return data?.data.data;
     }

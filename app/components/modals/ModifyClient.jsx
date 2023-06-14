@@ -1,11 +1,21 @@
 import * as Dialog from "@radix-ui/react-dialog";
-import { Form } from "@remix-run/react";
+import { Form, useActionData } from "@remix-run/react";
+import { useEffect, useState } from "react";
 
 export default function ModifyClient(props) {
     const { client } = props;
 
+    const [open, setOpen] = useState(false);
+    const data = useActionData();
+
+    useEffect(() => {
+        if (!data?.error) {
+            setOpen(false);
+        }
+    }, [data]);
+
     return (
-        <Dialog.Root>
+        <Dialog.Root open={open} onOpenChange={setOpen}>
             <Dialog.Trigger asChild>
                 <button>
                     <ion-icon name="create-outline"></ion-icon>
@@ -46,12 +56,13 @@ export default function ModifyClient(props) {
                                 required
                             />
                         </fieldset>
+
+                        <p className="text-center text-red-500">{data?.error}</p>
+
                         <div className="mt-[25px] flex justify-end">
-                            {/* <Dialog.Close asChild> */}
                             <button className="bg-green4 text-green11 hover:bg-green5 focus:shadow-green7 inline-flex h-[35px] items-center justify-center rounded-[4px] px-[15px] font-medium leading-none focus:shadow-[0_0_0_2px] focus:outline-none" type="submit" name="_action" value="modify">
                                 Modifica
                             </button>
-                            {/* </Dialog.Close> */}
                         </div>
                     </Form>
 

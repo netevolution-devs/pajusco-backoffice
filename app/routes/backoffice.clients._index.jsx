@@ -1,9 +1,8 @@
-import { json, redirect } from "@remix-run/node";
+import { json } from "@remix-run/node";
 import clientsProvider from "../api/clients";
 import { getUser } from "~/session.server";
 import { Form, Link, useLoaderData } from "@remix-run/react";
 import AddClient from "../components/modals/AddClient";
-import { safeRedirect } from "~/utils";
 import ModifyClient from "../components/modals/ModifyClient";
 
 export const meta = () => [{ title: "Clienti" }];
@@ -19,18 +18,22 @@ export const action = async ({ request }) => {
     const formData = await request.formData();
     const { _action, ...values } = Object.fromEntries(formData)
 
+    let res;
     if (_action === "add") {
-        const res = clientsProvider.add(user.token, values);
+        res = await clientsProvider.add(user.token, values);
     }
     if (_action === "remove") {
-        const res = clientsProvider.remove(user.token, values.clientId);
+        res = clientsProvider.remove(user.token, values.clientId);
     }
     if (_action === "modify") {
-        const res = clientsProvider.modify(user.token, values.clientId, values);
+        res = clientsProvider.modify(user.token, values.clientId, values);
     }
 
-    const redirectTo = safeRedirect(formData.get("redirectTo"), "/backoffice/clients");
-    return redirect(redirectTo);
+    if (res.message) {
+        return json({ error: res.message });
+    }
+
+    return json({});
 }
 
 export default function BackofficeClients() {
