@@ -53,7 +53,8 @@ export default function ModifyConsumer(props) {
                                 className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
                                 name="business_role"
                                 id="business_role"
-                                required>
+                                required
+                                defaultValue={consumer.business_role.id}>
                                 <option value="">--Scegli un ruolo--</option>
                                 <option value="1">Superuser</option>
                                 <option value="3">Generico</option>

@@ -34,6 +34,17 @@ export default function AddConsumer(props) {
                             />
                         </fieldset>
                         <fieldset className="mb-[15px] flex items-center gap-5">
+                            <label className="text-violet11 w-[90px] text-right text-[15px]" htmlFor="description">
+                                Descrizione
+                            </label>
+                            <input
+                                className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
+                                id="description"
+                                name="description"
+                                required
+                            />
+                        </fieldset>
+                        <fieldset className="mb-[15px] flex items-center gap-5">
                             <label className="text-violet11 w-[90px] text-right text-[15px]" htmlFor="password">
                                 Password
                             </label>
@@ -65,6 +76,7 @@ export default function AddConsumer(props) {
                                 className="text-violet11 shadow-violet7 focus:shadow-violet8 inline-flex h-[35px] w-full flex-1 items-center justify-center rounded-[4px] px-[10px] text-[15px] leading-none shadow-[0_0_0_1px] outline-none focus:shadow-[0_0_0_2px]"
                                 id="email"
                                 name="email"
+                                type="email"
                                 required
                             />
                         </fieldset>
